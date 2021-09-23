@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<th:block th:fragment="content">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>hello world</title>
+
+        <link href="/bootstrap/css/main.css" rel='stylesheet' />
+        <script src='/bootstrap/js/main.js'></script>
+
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                  //  navLinks: true,
+                    headerToolbar: {
+                        left: 'prev',
+                        center: 'title',
+                        right: 'next'
+                    },
+                    Height:400,
+                    contentHeight:600,
+                    contentWidth:600,
+
+                    expandRows: true, // 화면에 맞게 높이 재설정
+                    initialView: 'dayGridMonth',
+                    navLinkDayClick: function(date,jsEvent){
+                        alert('hi');
+                        //console.log('day',date.toISOString());
+
+                        //console.log('coords',jsEvent.pageX,jsEvent.pageY);
+
+                    },
+                    editable: true, // 수정 가능?
+                    selectable: true, // 달력 일자 드래그 설정가능
+                    nowIndicator: true, // 현재 시간 마크
+                    dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+                    locale: 'ko', // 한국어 설정
+                    editable : true,
+                    eventLimit : true,
+                    scroll:false,
+                    eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
+                        console.log(obj);
+                    },
+
+                    eventChange: function(obj) { // 이벤트가 수정되면 발생하는 이벤트
+                        console.log(obj);
+                    },
+                    eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
+                        console.log(obj);
+                    },
+                    select: function (arg){
+                        var title = prompt('Event Title:');
+                        if (title) {
+
+                            calendar.addEvent({
+
+                                title: title,
+
+                                start: arg.start,
+
+                                end: arg.end,
+
+                                allDay: arg.allDay
+
+                            })
+
+                        }
+
+                        calendar.unselect()
+                        alert('hello');
+                    },
+                    dayClick: function(date) {
+                        alert('clicked ' + date.format() + ' on resource ');
+                    },
+                    eventClick: function (date,jsEvent){
+
+                        alert('heliilo');
+                       // jsEvent.backgroundColor = 'yellow';
+
+                        if(document.getElementById('container_foot').style.display!='block'){
+                            document.getElementById('container_foot').style.display='block';
+                        }
+                        else{
+                            document.getElementById('container_foot').style.display='none';
+                        }
+                    },
+                    select: function(startDate, endDate, jsEvent, view, resource) {
+                        alert('selected ' + startDate.format() + ' to ' + endDate.format() + ' on resource ' + resource.id);
+                    },
+// 이벤트
+                    events: [
+                        {
+                            title: '',
+                            start: '2021-07-01'
+                        },
+                        {
+                            title: 'Long Event',
+                            start: '2021-07-07'
+                        },
+                        {
+                            groupId: 999,
+                            title: 'Repeating Event',
+                            start: '2021-07-09'
+                        },
+                        {
+                            groupId: 999,
+                            title: 'Repeating Event',
+                            start: '2021-07-16'
+                        },
+                        {
+                            title: 'Conference',
+                            start: '2021-07-11'
+                        },
+                        {
+                            title: 'Meeting',
+                            start: '2021-07-12'
+                        },
+                        {
+                            title: 'Birthday Party',
+                            start: '2021-07-13'
+                        },
+                        {
+                            title: 'Click for Google',
+                            url: 'http://google.com/', // 클릭시 해당 url로 이동
+                            start: '2021-07-28'
+                        }
+                    ],
+                    eventRender:function(event, eventElement) {
+                        if(event.imageurl) {
+                            eventElement.find("span.fc-title").css("<img src='" + event.imageurl + "'>");
+                        }
+                    }
+                });
+
+
+                calendar.render();
+            });
+
+        </script>
+    </head>
+
+    <body style="padding:30px;">
+    <div class="box">
+        <div class = 'title'>
+            달력
+        </div>
+        <div class = 'sun'>
+            <hr class ="a">
+        </div>
+    </div>
+    <div id='container'>
+        <div id='calendar'></div>
+        <div id="container_foot">
+
+            <div class="footsun">
+                <ul>
+                    <li>매일할일</li>
+                    <ul>
+                        <li>메일함비우기</li>
+                        <li>분리수거 기막히게</li>
+                    </ul>
+                    <li>매주할일</li>
+                    <ul>
+                        <li>김진권한테 용돈주기</li>
+                    </ul>
+                    <li>매달할일</li>
+                    <ul>
+                        <li>
+                            김진권한테 용돈더주기
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="put">
+        <div class="putparent">
+            <div class="putchild">
+                <a href="/jingwon">callendar</a>
+            </div>
+            <div class="putchild">home</div>
+            <div class="putchild">
+                <a href="/collection">colection</a>
+            </div>
+
+        </div>
+    </div>
+    </body>
+</th:block>
+</html>

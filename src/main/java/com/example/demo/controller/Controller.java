@@ -13,6 +13,12 @@ public class Controller {
     public String index(){
         return "/index";
     }
+    @GetMapping("/collection")
+    public String collection(){ return "/collection";}
+
     @GetMapping("/login")
     public String login(){ return "/login";}
+    @GetMapping("/jingwon")
+    public String jingwon(){ return "/jingwon";}
+
 }
